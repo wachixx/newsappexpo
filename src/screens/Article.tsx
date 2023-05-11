@@ -1,9 +1,22 @@
+import {WebView} from 'react-native-webview';
 import { Text, View } from "native-base"
+import { Platform } from 'react-native';
 
-const Article = () => {
+const Article = ({ route }) => {
+    const { url } = route.params;
     return (
-        <View>
-             <Text>Article details</Text>
+        <View style={{flex:1, flexDirection:'column'}}>
+            {Platform.OS === 'web'?
+              <iframe src={url} height={400} width={300}/>
+               :
+               <WebView
+               originWhitelist={['*']} 
+               source={{
+                 uri: url, baseUrl:''
+               }}
+               style={{width:"100%", height: '100%'}}
+               />
+            }       
         </View>
     )
 }
