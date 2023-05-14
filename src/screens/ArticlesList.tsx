@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { FunctionComponent, useCallback, useContext, useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { Center, Container, View } from "native-base";
 import NewsCard from "../components/NewsCard";
@@ -7,30 +7,32 @@ import NewsTopicsSelector from "../components/NewsTopicsSelector";
 import ThemeColor from "../components/ThemeColor";
 import request from "../services/request";
 import getDates from "../utils/getDates";
+import { LanguageContext } from "../context/LanguageContext";
 
 
 const  ArticlesList = ({navigation}) => {
 
   const [articles, setArticles] = useState();
   const [topic, setTopic] = useState('apple');
-  const [language, setLanguage] = useState('en');
 
+  const { language } = useContext(LanguageContext);
   const { today, aWeekAgo } = getDates();
 
   const fetchData = useCallback(async () => {
     const { data } = await request.get(`everything?q=${topic}&from=${aWeekAgo}&to=${today}&language=${language}`);
     setArticles(data.articles);
-  }, [])
+  }, [topic, language])
 
   useEffect (() => {
     fetchData()
       .catch(console.error);
-  }, [topic])
+  }, [topic, language])
+
 
   return (
-      <Center>
-        <Container>
-            <TopBar/>
+        <>
+            <TopBar title="NewsApp"/>
+
             <View style={{flexDirection: 'row', columnGap: 5, marginVertical: 10, alignSelf: 'center'}}>
               <ThemeColor color="red"/>
               <ThemeColor color="black"/>
@@ -56,8 +58,7 @@ const  ArticlesList = ({navigation}) => {
                 />
               )}
             />
-        </Container>
-      </Center>
+        </>
   );
 
 }
