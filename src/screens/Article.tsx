@@ -7,7 +7,7 @@ const Article = ({ route }) => {
     return (
         <View style={{flex:1, flexDirection:'column'}}>
             {Platform.OS === 'web'?
-              <iframe src={url} height={400} width={300}/>
+              <iframe src={url} height="100%" width="100%"/>
                :
                <WebView
                originWhitelist={['*']} 

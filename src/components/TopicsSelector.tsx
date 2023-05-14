@@ -40,7 +40,7 @@ export const TopicSelectorWrapper: FunctionComponent<TopicProps>   = ({onTopicCh
     }, [activeTopic])
 
     return (
-        <Center>
+        <Center my={2}>
             <HStack space={3} alignItems="center">
                 {defaultTopics.map((item, index)=> {
                     return(
