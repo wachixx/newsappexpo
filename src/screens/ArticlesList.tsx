@@ -8,10 +8,12 @@ import ThemeColor from "../components/ThemeColor";
 import request from "../services/request";
 import getDates from "../utils/getDates";
 import { LanguageContext } from "../context/LanguageContext";
+import Loader from "../components/Loader";
 
 
 const  ArticlesList = ({navigation}) => {
 
+  const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState();
   const [topic, setTopic] = useState('apple');
 
@@ -19,8 +21,10 @@ const  ArticlesList = ({navigation}) => {
   const { today, aWeekAgo } = getDates();
 
   const fetchData = useCallback(async () => {
+    setLoading(true);
     const { data } = await request.get(`everything?q=${topic}&from=${aWeekAgo}&to=${today}&language=${language}`);
     setArticles(data.articles);
+    setLoading(false);
   }, [topic, language])
 
   const handleTopicChange = (value: string) => {
@@ -44,17 +48,23 @@ const  ArticlesList = ({navigation}) => {
             </View>
 
             <TopicSelectorWrapper onTopicChange={handleTopicChange}/>
+            
+            {loading ? 
+              <Loader/>
+            :
+              <FlatList
+                data={articles}
+                renderItem={({ item }) => (
+                  <NewsCard title={item.title} 
+                    description={item.description}
+                    urlToImage={item.urlToImage}
+                    onPress = {()=> navigation.navigate('Article', { url: item.url})}
+                  />
+                )}
+              />
 
-            <FlatList
-              data={articles}
-              renderItem={({ item }) => (
-                <NewsCard title={item.title} 
-                  description={item.description}
-                  urlToImage={item.urlToImage}
-                  onPress = {()=> navigation.navigate('Article', { url: item.url})}
-                />
-              )}
-            />
+            }
+
         </>
   );
 

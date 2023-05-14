@@ -19,7 +19,6 @@ export const TopicBadge: FunctionComponent<Props>  = ({key, title, onTopicChange
     const changeActiveTopic =(topic: string)=>{
         onTopicChange(topic)
     }
-
     return (
         <Pressable onPress={()=>changeActiveTopic(title)}>
             <Badge key={key} variant={active === title ? 'solid' : 'outline'} colorScheme="info">{title}</Badge>
@@ -36,6 +35,7 @@ export const TopicSelectorWrapper: FunctionComponent<TopicProps>   = ({onTopicCh
         onTopicChange(value)
     };
 
+    //Force a rerender when a new chip is clicked. This can be done better? yes.
     useEffect(()=> {
     }, [activeTopic])
 
