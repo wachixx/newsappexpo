@@ -24,7 +24,7 @@ const LanguageSelector: FunctionComponent = () => {
             placeholder='Language' 
             _selectedItem={{
               bg: 'teal.600',
-              endIcon: <CheckIcon size='2' />
+              endIcon: <CheckIcon size='4' />
             }} 
             onValueChange={itemValue => handleChange(itemValue)}
           >
@@ -36,7 +36,6 @@ const LanguageSelector: FunctionComponent = () => {
 };
 
 const TopBar: FunctionComponent<Props> = ({title}) => {
-
     return (
       <>
         <StatusBar barStyle='light-content' /> 

@@ -3,7 +3,7 @@ import { FlatList } from "react-native";
 import { Center, Container, View } from "native-base";
 import NewsCard from "../components/NewsCard";
 import TopBar from "../components/TopBar";
-import NewsTopicsSelector from "../components/NewsTopicsSelector";
+import { TopicSelectorWrapper } from "../components/TopicsSelector";
 import ThemeColor from "../components/ThemeColor";
 import request from "../services/request";
 import getDates from "../utils/getDates";
@@ -23,6 +23,10 @@ const  ArticlesList = ({navigation}) => {
     setArticles(data.articles);
   }, [topic, language])
 
+  const handleTopicChange = (value: string) => {
+    setTopic(value);
+  };
+
   useEffect (() => {
     fetchData()
       .catch(console.error);
@@ -39,14 +43,7 @@ const  ArticlesList = ({navigation}) => {
               <ThemeColor color="green"/>
             </View>
 
-            <View style={{flexDirection: 'row', columnGap: 5, marginVertical: 10, alignSelf: 'center'}}>
-              <NewsTopicsSelector title = 'apple'/>
-              <NewsTopicsSelector title = 'meta'/>
-              <NewsTopicsSelector title = 'netflix'/>
-              <NewsTopicsSelector title = 'google'/>
-              <NewsTopicsSelector title = 'twitter'/>
-              <NewsTopicsSelector title = 'tesla'/>
-            </View>
+            <TopicSelectorWrapper onTopicChange={handleTopicChange}/>
 
             <FlatList
               data={articles}
