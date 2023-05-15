@@ -1,23 +1,22 @@
-import {WebView} from 'react-native-webview';
-import { Text, View } from "native-base"
-import { Platform } from 'react-native';
+import { FunctionComponent } from 'react';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { CommonActions } from '@react-navigation/native';
+import { Box } from "native-base"
+import RootStackParamList from '../navigation/RootStackParamList';
+import TopBar from '../components/TopBar';
+import WebViewBox from '../components/WebViewBox';
 
-const Article = ({ route }) => {
+type ScreenProps = NativeStackScreenProps<RootStackParamList, 'Article'>;
+
+const Article: FunctionComponent<ScreenProps> = ({ route, navigation } :  any) => {
     const { url } = route.params;
     return (
-        <View style={{flex:1, flexDirection:'column'}}>
-            {Platform.OS === 'web'?
-              <iframe src={url} height="100%" width="100%"/>
-               :
-               <WebView
-               originWhitelist={['*']} 
-               source={{
-                 uri: url, baseUrl:''
-               }}
-               style={{width:"100%", height: '100%'}}
-               />
-            }       
-        </View>
+      <>
+        <Box width='100%' height="100%">
+          <TopBar title="NewsApp" subPage={true} onBackBtnPress={()=>navigation.dispatch(CommonActions.goBack())}/>
+          <WebViewBox url={url}/>
+        </Box>
+      </>
     )
 }
 

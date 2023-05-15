@@ -1,6 +1,6 @@
 type RootStackParamList = {
     ArticlesList: undefined;
-    Article: undefined;
+    Article: {url: string};
 };
 
 export default RootStackParamList;

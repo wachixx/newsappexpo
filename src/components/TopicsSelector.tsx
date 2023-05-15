@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Center, HStack, Pressable, View } from "native-base";
+import { Badge, Center, HStack, Pressable } from "native-base";
 import { FunctionComponent, useEffect, useState } from "react";
 
 var defaultTopics: string[] = ['apple', 'meta', 'netflix', 'google', 'twitter', 'tesla'];
@@ -40,7 +40,7 @@ export const TopicSelectorWrapper: FunctionComponent<TopicProps>   = ({onTopicCh
     }, [activeTopic])
 
     return (
-        <Center my={2}>
+        <Center mt={5}>
             <HStack space={3} alignItems="center">
                 {defaultTopics.map((item, index)=> {
                     return(

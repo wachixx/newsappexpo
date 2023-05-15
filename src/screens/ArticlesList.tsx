@@ -1,16 +1,20 @@
 import { FunctionComponent, useCallback, useContext, useEffect, useState } from "react";
 import { FlatList } from "react-native";
-import { Box, Center, Container, Text, View } from "native-base";
+import { Box, Text } from "native-base";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
+import RootStackParamList from "../navigation/RootStackParamList";
 import Card from "../components/Card";
 import TopBar from "../components/TopBar";
 import { TopicSelectorWrapper } from "../components/TopicsSelector";
-import ThemeColor from "../components/ThemeColor";
 import request from "../services/request";
 import getDates from "../utils/getDates";
 import { LanguageContext } from "../context/LanguageContext";
 import Loader from "../components/Loader";
 
-const  ArticlesList = ({navigation}) => {
+type ScreenProps = NativeStackScreenProps<RootStackParamList, 'ArticlesList'>;
+
+const  ArticlesList: FunctionComponent<ScreenProps>  = ({navigation}) => {
 
   const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState();
@@ -45,15 +49,9 @@ const  ArticlesList = ({navigation}) => {
 
   return (
         <>
-            <TopBar title="NewsApp"/>
-
-            {/*<View style={{flexDirection: 'row', columnGap: 5, marginVertical: 10, alignSelf: 'center'}}>
-              <ThemeColor color="red"/>
-              <ThemeColor color="black"/>
-              <ThemeColor color="green"/>
-  </View>*/}
-
+            <TopBar title="NewsApp" subPage={false}/>
             <TopicSelectorWrapper onTopicChange={handleTopicChange}/>
+
             {loading ? 
               <Loader/>
             :
@@ -76,7 +74,6 @@ const  ArticlesList = ({navigation}) => {
               }
             </>
             }
-
         </>
   );
 

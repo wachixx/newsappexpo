@@ -1,9 +1,12 @@
-import { HStack, StatusBar, Heading, Box, CheckIcon, Select } from "native-base";
+import { HStack, StatusBar, Heading, Box, CheckIcon, Select, ArrowBackIcon, Text } from "native-base";
 import { FunctionComponent, useContext, useState } from "react";
 import { LanguageContext } from "../context/LanguageContext";
+import { Pressable } from "react-native";
 
 type Props = {
   title: string;
+  subPage: boolean;
+  onBackBtnPress?: () => void;
 }
 
 const LanguageSelector: FunctionComponent = () => {
@@ -35,14 +38,22 @@ const LanguageSelector: FunctionComponent = () => {
   );
 };
 
-const TopBar: FunctionComponent<Props> = ({title}) => {
+const TopBar: FunctionComponent<Props> = ({title, subPage, onBackBtnPress}) => {
     return (
       <>
         <StatusBar barStyle='light-content' /> 
         <HStack px={5} borderBottomWidth={1} borderBottomColor='#000' w='100%' justifyContent='space-between' alignItems='center'>
-          <Heading size='lg'>{title}</Heading>
-          <LanguageSelector/>
-        </HStack>
+        {subPage ?
+          <>
+             <Pressable onPress={onBackBtnPress}><ArrowBackIcon size="5" my={5}/></Pressable>
+          </>
+        : 
+          <>
+            <Heading size='lg'>{title}</Heading>
+            <LanguageSelector/>
+          </>
+        } 
+        </HStack> 
       </>
     );
 };
